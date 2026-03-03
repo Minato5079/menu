@@ -74,6 +74,9 @@
             <button onclick="filterMenu('主食')" class="tab-btn px-6 py-2 rounded-xl border-2 border-orange-100 font-bold text-orange-800 transition-all">主食</button>
             <button onclick="filterMenu('肉類')" class="tab-btn px-6 py-2 rounded-xl border-2 border-orange-100 font-bold text-orange-800 transition-all">肉類</button>
             <button onclick="filterMenu('蔬菜')" class="tab-btn px-6 py-2 rounded-xl border-2 border-orange-100 font-bold text-orange-800 transition-all">蔬菜</button>
+            <button onclick="filterMenu('蛋類')" class="tab-btn px-6 py-2 rounded-xl border-2 border-orange-100 font-bold text-orange-800 transition-all">蛋類</button>
+            <button onclick="filterMenu('涼拌小菜')" class="tab-btn px-6 py-2 rounded-xl border-2 border-orange-100 font-bold text-orange-800 transition-all">涼拌小菜</button>
+            <button onclick="filterMenu('湯')" class="tab-btn px-6 py-2 rounded-xl border-2 border-orange-100 font-bold text-orange-800 transition-all">湯</button>
             <button onclick="filterMenu('點心')" class="tab-btn px-6 py-2 rounded-xl border-2 border-orange-100 font-bold text-orange-800 transition-all">點心</button>
         </div>
     </nav>
@@ -93,7 +96,8 @@
 
     <script>
         const myMenu = [
-            {
+    /* 主食 */    
+        {
                 name: "私藏油潑扯麵",
                 category: "主食",
                 desc: "手工揉製麵糰，現扯現下，搭配香辣油潑辣子，彈牙有勁。",
@@ -107,20 +111,36 @@
                 image: "https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=1200",
                 tag: "🍚 經典"
             },
+    /* 肉類 */ 
             {
-                name: "秘製紅燒肉",
+                name: "糖醋排骨",
                 category: "肉類",
-                desc: "選用高品質五花肉，特製醬汁慢燉，入口即化，肉食控首選。",
-                image: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=1200",
+                desc: "選用高品質排骨，特製醬汁慢燉，入口即化，肉食控首選。",
+                image: "images/Meats/糖醋排骨.png",
                 tag: "🔥 必點"
             },
             {
                 name: "蒲燒虱目魚",
                 category: "肉類",
-                desc: "細緻虱目魚柳，刷上秘製鹹甜蒲燒醬汁慢烤，鮮美無刺。",
-                image: "images/meat/蒲燒虱目魚.png",
+                desc: "細緻虱目魚，秘製鹹甜蒲燒醬汁，鮮美無刺。",
+                image: "images/Meats/蒲燒虱目魚.png",
                 tag: "🐟 鮮甜"
             },
+            {
+                name: "鹹酥雞",
+                category: "肉類",
+                desc: "精選雞胸肉。",
+                image: "images/Meats/鹹酥雞.png",
+                tag: "🍗 鹹香"
+            },
+            {
+                name: "番茄紅燒牛",
+                category: "肉類",
+                desc: "精選番茄、牛肉、馬鈴薯。",
+                image: "images/Meats/番茄紅燒牛.png",
+                tag: "🍖 好吃"
+            },
+    /* 蔬菜 */ 
             {
                 name: "蒜香炒時蔬",
                 category: "蔬菜",
@@ -128,6 +148,31 @@
                 image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200",
                 tag: "🥬 新鮮"
             },
+    /* 蛋類 */ 
+            {
+                name: "水煮蛋",
+                category: "蛋類",
+                desc: "選用雞蛋。",
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200",
+                tag: "🍳 新鮮"
+            },
+    /* 涼拌小菜 */
+            {
+                name: "小黃瓜",
+                category: "涼拌小菜",
+                desc: "選用新鮮黃瓜。",
+                image: "images/Cold dish/涼拌小黃瓜.png",
+                tag: "🥒 鮮甜"
+            },
+    /* 湯 */
+            {
+                name: "玉米濃湯",
+                category: "湯",
+                desc: "鮮甜好喝。",
+                image: "images/Cold dish/涼拌小黃瓜.png",
+                tag: "🥣 好喝"
+            },        
+    /* 點心 */ 
             {
                 name: "焦糖烤布蕾",
                 category: "點心",
