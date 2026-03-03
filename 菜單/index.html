@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安の私房料理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+        
+        /* 暖色系背景：溫潤奶油色 */
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background-color: #fdf6ec; /* 奶油白背景 */
+            color: #5d4037; /* 深咖啡色文字，取代純黑 */
+        }
+
+        .menu-card { 
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            background-color: #ffffff;
+        }
+
+        .menu-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 25px -5px rgba(183, 121, 31, 0.15); /* 帶橘色的陰影 */
+        }
+
+        /* 暖橘色按鈕 */
+        .tab-active { 
+            background-color: #d97706; /* 溫暖的琥珀橘 */
+            color: white !important; 
+            border-color: #d97706; 
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+        }
+
+        /* 燈箱背景動畫 */
+        #lightbox.visible { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="text-amber-900">
+
+    <div id="lightbox" class="fixed inset-0 bg-stone-900/95 z-50 hidden justify-center items-center p-4 cursor-zoom-out" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-amber-50 text-5xl font-light hover:text-orange-400">&times;</button>
+        <img id="lightbox-img" src="" class="max-w-full max-h-full rounded-2xl shadow-2xl object-contain transition-transform duration-300 scale-95 border-4 border-amber-100/10">
+    </div>
+
+    <header class="py-14 text-center bg-[#fffcf8] shadow-sm mb-6 border-b border-orange-100">
+        <h1 class="text-4xl font-black text-orange-900 tracking-widest uppercase">安の私房料理</h1>
+        <div class="mt-4 flex justify-center items-center gap-3">
+            <span class="h-[1.5px] w-10 bg-orange-200"></span>
+            <p class="text-orange-800/70 font-bold tracking-widest text-sm">HOME KITCHEN MENU</p>
+            <span class="h-[1.5px] w-10 bg-orange-200"></span>
+        </div>
+    </header>
+
+    <nav class="sticky top-0 z-10 bg-[#fdf6ec]/90 backdrop-blur-md py-4 mb-8">
+        <div class="flex flex-wrap justify-center gap-3 md:gap-6 px-4" id="category-tabs">
+            <button onclick="filterMenu('全部')" class="tab-btn px-7 py-2.5 rounded-2xl border-2 border-orange-100 font-bold text-orange-800 hover:bg-orange-50 transition-all tab-active">全部</button>
+            <button onclick="filterMenu('主食')" class="tab-btn px-7 py-2.5 rounded-2xl border-2 border-orange-100 font-bold text-orange-800 hover:bg-orange-50 transition-all">主食</button>
+            <button onclick="filterMenu('肉類')" class="tab-btn px-7 py-2.5 rounded-2xl border-2 border-orange-100 font-bold text-orange-800 hover:bg-orange-50 transition-all">肉類</button>
+            <button onclick="filterMenu('蔬菜')" class="tab-btn px-7 py-2.5 rounded-2xl border-2 border-orange-100 font-bold text-orange-800 hover:bg-orange-50 transition-all">蔬菜</button>
+            <button onclick="filterMenu('點心')" class="tab-btn px-7 py-2.5 rounded-2xl border-2 border-orange-100 font-bold text-orange-800 hover:bg-orange-50 transition-all">點心</button>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 min-h-[60vh]">
+        <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            </div>
+    </main>
+
+    <footer class="py-24 text-center">
+        <div class="inline-block p-8 rounded-full bg-orange-50 mb-4 shadow-inner">
+            <p class="text-orange-900/40 text-sm tracking-widest mb-2 uppercase italic">Homemade with love</p>
+            <p class="font-black text-orange-700 text-2xl italic tracking-tighter">" 不好吃退錢 "</p>
+        </div>
+        <p class="text-orange-900/30 text-xs mt-4">© 2026 安的專屬廚房</p>
+    </footer>
+
+    <script>
+        // --- 菜單資料庫 ---
+        const myMenu = [
+            /* 主食 */
+            {
+                name: "私藏油潑扯麵",
+                category: "主食",
+                desc: "手工揉製麵糰，現扯現下，搭配香辣油潑辣子，彈牙有勁。",
+                image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=1200",
+                tag: "🌶️ 帶勁"
+            },
+            {
+                name: "精選白米飯",
+                category: "主食",
+                desc: "嚴選在地好米，精準水米比例，粒粒分明、香Q飽滿。",
+                image: "https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=1200",
+                tag: "🍚 經典"
+            },
+            /* 肉類 */
+            {
+                name: "秘製紅燒肉",
+                category: "肉類",
+                desc: "選用高品質五花肉，特製醬汁慢燉，入口即化，肉食控首選。",
+                image: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=1200",
+                tag: "🔥 必點"
+            },
+            {
+                name: "蒲燒虱目魚",
+                category: "肉類",
+                desc: "細緻虱目魚柳，刷上秘製鹹甜蒲燒醬汁慢烤，鮮美無刺。",
+                image: "images/meat/蒲燒虱目魚.png",
+                tag: "🐟 鮮甜"
+            },
+            /* 蔬菜 */
+            {
+                name: "蒜香炒時蔬",
+                category: "蔬菜",
+                desc: "選用當季翠綠蔬菜，大火快炒鎖住水分，清甜爽口。",
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200",
+                tag: "🥬 新鮮"
+            },
+            /* 點心 */
+            {
+                name: "焦糖烤布蕾",
+                category: "點心",
+                desc: "絲滑奶香內餡搭配現烤焦糖脆片，最甜蜜的收尾。",
+                image: "https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?auto=format&fit=crop&w=1200",
+                tag: "🍮 手作"
+            }
+        ];
+
+        // --- 以下渲染邏輯不變 ---
+        const menuGrid = document.getElementById('menu-grid');
+        const buttons = document.querySelectorAll('.tab-btn');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function renderMenu(filter = '全部') {
+            const filteredData = filter === '全部' ? myMenu : myMenu.filter(item => item.category === filter);
+
+            menuGrid.innerHTML = filteredData.map(dish => `
+                <div class="menu-card rounded-[3rem] overflow-hidden border border-orange-100 flex flex-col shadow-sm">
+                    <div class="relative cursor-zoom-in group overflow-hidden" onclick="openLightbox('${dish.image}')">
+                        <img src="${dish.image}" alt="${dish.name}" class="w-full h-72 object-cover transition-transform duration-1000 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-orange-900/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <span class="absolute top-6 left-6 bg-white/95 backdrop-blur-md px-4 py-2 rounded-2xl text-xs font-bold text-orange-900 shadow-sm border border-orange-50">
+                            ${dish.category}
+                        </span>
+                    </div>
+                    <div class="p-8 flex-grow">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-bold text-orange-900 tracking-tight">${dish.name}</h3>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-orange-600 bg-orange-100 px-2.5 py-1 rounded-lg">${dish.tag}</span>
+                        </div>
+                        <p class="text-orange-800/60 leading-relaxed text-sm font-medium">${dish.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openLightbox(url) {
+            lightboxImg.src = url;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => lightboxImg.style.transform = 'scale(1)', 10);
+        }
+
+        function closeLightbox() {
+            lightboxImg.style.transform = 'scale(0.95)';
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
+        function filterMenu(category) {
+            buttons.forEach(btn => {
+                if(btn.innerText === category) btn.classList.add('tab-active');
+                else btn.classList.remove('tab-active');
+            });
+            renderMenu(category);
+        }
+
+        document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
+
+        renderMenu();
+    </script>
